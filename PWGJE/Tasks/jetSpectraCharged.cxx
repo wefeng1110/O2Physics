@@ -42,7 +42,7 @@ using namespace o2;
 using namespace o2::framework;
 using namespace o2::framework::expressions;
 
-struct JetFinderQATask {
+struct JetSpectraChargedTask {
 
   HistogramRegistry registry;
 
@@ -612,7 +612,7 @@ struct JetFinderQATask {
       fillHistograms(jet, collision.centrality(), collision.trackOccupancyInTimeRange());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsData, "jet finder QA data", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsData, "jet finder QA data", false);
 
   void processJetsRhoAreaSubData(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision,
                                  soa::Join<aod::ChargedJets, aod::ChargedJetConstituents> const& jets,
@@ -631,7 +631,7 @@ struct JetFinderQATask {
       fillRhoAreaSubtractedHistograms(jet, collision.centrality(), collision.trackOccupancyInTimeRange(), collision.rho());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsRhoAreaSubData, "jet finder QA for rho-area subtracted jets", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsRhoAreaSubData, "jet finder QA for rho-area subtracted jets", false);
 
   void processJetsRhoAreaSubMCD(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision,
                                 soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents> const& jets,
@@ -650,7 +650,7 @@ struct JetFinderQATask {
       fillRhoAreaSubtractedHistograms(jet, collision.centrality(), collision.trackOccupancyInTimeRange(), collision.rho());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsRhoAreaSubMCD, "jet finder QA for rho-area subtracted mcd jets", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsRhoAreaSubMCD, "jet finder QA for rho-area subtracted mcd jets", false);
 
   void processEvtWiseConstSubJetsData(soa::Filtered<aod::JetCollisions>::iterator const& collision, soa::Join<aod::ChargedEventWiseSubtractedJets, aod::ChargedEventWiseSubtractedJetConstituents> const& jets, aod::JetTracksSub const&)
   {
@@ -667,7 +667,7 @@ struct JetFinderQATask {
       fillEventWiseConstituentSubtractedHistograms(jet, collision.centrality());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processEvtWiseConstSubJetsData, "jet finder QA for eventwise constituent-subtracted jets data", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processEvtWiseConstSubJetsData, "jet finder QA for eventwise constituent-subtracted jets data", false);
 
   void processEvtWiseConstSubJetsMCD(soa::Filtered<aod::JetCollisions>::iterator const& collision, soa::Join<aod::ChargedMCDetectorLevelEventWiseSubtractedJets, aod::ChargedMCDetectorLevelEventWiseSubtractedJetConstituents> const& jets, aod::JetTracksSub const&)
   {
@@ -684,7 +684,7 @@ struct JetFinderQATask {
       fillEventWiseConstituentSubtractedHistograms(jet, collision.centrality());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processEvtWiseConstSubJetsMCD, "jet finder QA for eventwise constituent-subtracted mcd jets", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processEvtWiseConstSubJetsMCD, "jet finder QA for eventwise constituent-subtracted mcd jets", false);
 
   void processJetsSubMatched(soa::Filtered<aod::JetCollisions>::iterator const& collision,
                              soa::Join<aod::ChargedJets, aod::ChargedJetConstituents, aod::ChargedJetsMatchedToChargedEventWiseSubtractedJets> const& jets,
@@ -704,7 +704,7 @@ struct JetFinderQATask {
       fillMatchedHistograms<soa::Join<aod::ChargedJets, aod::ChargedJetConstituents, aod::ChargedJetsMatchedToChargedEventWiseSubtractedJets>::iterator, soa::Join<aod::ChargedEventWiseSubtractedJets, aod::ChargedEventWiseSubtractedJetConstituents, aod::ChargedEventWiseSubtractedJetsMatchedToChargedJets>>(jet);
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsSubMatched, "jet finder QA matched unsubtracted and constituent subtracted jets", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsSubMatched, "jet finder QA matched unsubtracted and constituent subtracted jets", false);
 
   void processJetsMCD(soa::Filtered<aod::JetCollisions>::iterator const& collision, soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents> const& jets, aod::JetTracks const&)
   {
@@ -721,7 +721,7 @@ struct JetFinderQATask {
       fillHistograms(jet, collision.centrality(), collision.trackOccupancyInTimeRange());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCD, "jet finder QA mcd", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCD, "jet finder QA mcd", false);
 
   void processJetsMCDWeighted(soa::Filtered<aod::JetCollisions>::iterator const& collision, soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents, aod::ChargedMCDetectorLevelJetEventWeights> const& jets, aod::JetTracks const&)
   {
@@ -744,7 +744,7 @@ struct JetFinderQATask {
       fillHistograms(jet, collision.centrality(), collision.trackOccupancyInTimeRange(), jet.eventWeight());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCDWeighted, "jet finder QA mcd with weighted events", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCDWeighted, "jet finder QA mcd with weighted events", false);
 
   void processJetsMCP(soa::Join<aod::ChargedMCParticleLevelJets, aod::ChargedMCParticleLevelJetConstituents>::iterator const& jet, aod::JetParticles const&, aod::JetMcCollisions const&, soa::Filtered<aod::JetCollisionsMCD> const& collisions)
   {
@@ -763,7 +763,7 @@ struct JetFinderQATask {
       fillMCPHistograms(jet);
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCP, "jet finder QA mcp", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCP, "jet finder QA mcp", false);
 
   void processJetsMCPWeighted(soa::Join<aod::ChargedMCParticleLevelJets, aod::ChargedMCParticleLevelJetConstituents, aod::ChargedMCParticleLevelJetEventWeights>::iterator const& jet, aod::JetParticles const&, aod::JetMcCollisions const&, soa::Filtered<aod::JetCollisionsMCD> const& collisions)
   {
@@ -788,7 +788,7 @@ struct JetFinderQATask {
       fillMCPHistograms(jet, jet.eventWeight());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCPWeighted, "jet finder QA mcp with weighted events", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCPWeighted, "jet finder QA mcp with weighted events", false);
 
   void processJetsMCPMCDMatched(soa::Filtered<aod::JetCollisions>::iterator const& collision,
                                 soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents, aod::ChargedMCDetectorLevelJetsMatchedToChargedMCParticleLevelJets> const& mcdjets,
@@ -808,7 +808,7 @@ struct JetFinderQATask {
       fillMatchedHistograms<soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents, aod::ChargedMCDetectorLevelJetsMatchedToChargedMCParticleLevelJets>::iterator, soa::Join<aod::ChargedMCParticleLevelJets, aod::ChargedMCParticleLevelJetConstituents, aod::ChargedMCParticleLevelJetsMatchedToChargedMCDetectorLevelJets>>(mcdjet);
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCPMCDMatched, "jet finder QA matched mcp and mcd", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCPMCDMatched, "jet finder QA matched mcp and mcd", false);
 
   void processJetsMCPMCDMatchedWeighted(soa::Filtered<aod::JetCollisions>::iterator const& collision,
                                         soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents, aod::ChargedMCDetectorLevelJetsMatchedToChargedMCParticleLevelJets, aod::ChargedMCDetectorLevelJetEventWeights> const& mcdjets,
@@ -828,13 +828,13 @@ struct JetFinderQATask {
       fillMatchedHistograms<soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents, aod::ChargedMCDetectorLevelJetsMatchedToChargedMCParticleLevelJets, aod::ChargedMCDetectorLevelJetEventWeights>::iterator, soa::Join<aod::ChargedMCParticleLevelJets, aod::ChargedMCParticleLevelJetConstituents, aod::ChargedMCParticleLevelJetsMatchedToChargedMCDetectorLevelJets, aod::ChargedMCParticleLevelJetEventWeights>>(mcdjet, mcdjet.eventWeight());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processJetsMCPMCDMatchedWeighted, "jet finder QA matched mcp and mcd with weighted events", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processJetsMCPMCDMatchedWeighted, "jet finder QA matched mcp and mcd with weighted events", false);
 
   void processMCCollisionsWeighted(aod::JetMcCollision const& collision)
   {
     registry.fill(HIST("h_collision_eventweight_part"), collision.weight());
   }
-  PROCESS_SWITCH(JetFinderQATask, processMCCollisionsWeighted, "collision QA for weighted events", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processMCCollisionsWeighted, "collision QA for weighted events", false);
 
 
   void processTracks(soa::Filtered<aod::JetCollisions>::iterator const& collision,
@@ -854,7 +854,7 @@ struct JetFinderQATask {
     registry.fill(HIST("h2_centrality_collisions"), collision.centrality(), 2.5);
     fillTrackHistograms(collision, tracks);
   }
-  PROCESS_SWITCH(JetFinderQATask, processTracks, "QA for charged tracks", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processTracks, "QA for charged tracks", false);
 
   void processTracksWeighted(soa::Join<aod::JetCollisions, aod::JMcCollisionLbs>::iterator const& collision,
                              aod::JetMcCollisions const&,
@@ -875,7 +875,7 @@ struct JetFinderQATask {
     registry.fill(HIST("h_collisions_weighted"), 2.5, eventWeight);
     fillTrackHistograms(collision, tracks, eventWeight);
   }
-  PROCESS_SWITCH(JetFinderQATask, processTracksWeighted, "QA for charged tracks weighted", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processTracksWeighted, "QA for charged tracks weighted", false);
 
   void processTracksSub(soa::Filtered<aod::JetCollisions>::iterator const& collision,
                         soa::Filtered<aod::JetTracksSub> const& tracks)
@@ -892,7 +892,7 @@ struct JetFinderQATask {
       registry.fill(HIST("h3_track_pt_track_eta_track_phi_eventwiseconstituentsubtracted"), track.pt(), track.eta(), track.phi());
     }
   }
-  PROCESS_SWITCH(JetFinderQATask, processTracksSub, "QA for charged event-wise embedded subtracted tracks", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processTracksSub, "QA for charged event-wise embedded subtracted tracks", false);
 
   void processRho(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision, soa::Filtered<aod::JetTracks> const& tracks)
   {
@@ -914,19 +914,19 @@ struct JetFinderQATask {
     registry.fill(HIST("h2_centrality_rho"), collision.centrality(), collision.rho());
     registry.fill(HIST("h2_centrality_rhom"), collision.centrality(), collision.rhoM());
   }
-  PROCESS_SWITCH(JetFinderQATask, processRho, "QA for rho-area subtracted jets", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processRho, "QA for rho-area subtracted jets", false);
 
   void processRandomConeData(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision, soa::Join<aod::ChargedJets, aod::ChargedJetConstituents> const& jets, soa::Filtered<aod::JetTracks> const& tracks)
   {
     randomCone(collision, jets, tracks);
   }
-  PROCESS_SWITCH(JetFinderQATask, processRandomConeData, "QA for random cone estimation of background fluctuations in data", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processRandomConeData, "QA for random cone estimation of background fluctuations in data", false);
 
   void processRandomConeMCD(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision, soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents> const& jets, soa::Filtered<aod::JetTracks> const& tracks)
   {
     randomCone(collision, jets, tracks);
   }
-  PROCESS_SWITCH(JetFinderQATask, processRandomConeMCD, "QA for random cone estimation of background fluctuations in mcd", false);
+  PROCESS_SWITCH(JetSpectraChargedTask, processRandomConeMCD, "QA for random cone estimation of background fluctuations in mcd", false);
 };
 
-WorkflowSpec defineDataProcessing(ConfigContext const& cfgc) { return WorkflowSpec{adaptAnalysisTask<JetFinderQATask>(cfgc, TaskName{"jet-charged-spectra"})}; }
+WorkflowSpec defineDataProcessing(ConfigContext const& cfgc) { return WorkflowSpec{adaptAnalysisTask<JetSpectraChargedTask>(cfgc, TaskName{"jet-charged-spectra"})}; }
