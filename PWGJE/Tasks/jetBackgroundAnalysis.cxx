@@ -16,6 +16,7 @@
 
 #include <cmath>
 #include <TRandom3.h>
+#include <string>
 #include "TLorentzVector.h"
 
 #include "Framework/ASoA.h"
