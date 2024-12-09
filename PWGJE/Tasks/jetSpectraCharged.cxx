@@ -98,7 +98,7 @@ struct JetSpectraChargedTask {
       registry.add("h_jet_pt", "jet pT;#it{p}_{T,jet} (GeV/#it{c}); counts", {HistType::kTH1F, {jetPtAxisRhoAreaSub}});
       registry.add("h_jet_eta", "jet eta;#eta; counts", {HistType::kTH1F, {jetEtaAxis}});
       registry.add("h_jet_phi", "jet phi;#phi; counts", {HistType::kTH1F, {PhiAxis}});
-      if(doprocessQCWeighted){
+      if (doprocessQCWeighted) {
         registry.add("h_collisions_weighted", "event status;event status;entries", {HistType::kTH1F, {{4, 0.0, 4.0}}});
       }
     }
@@ -113,7 +113,7 @@ struct JetSpectraChargedTask {
       registry.add("h2_jet_pt_jet_corr_pt_rhoareasubtracted", "jet #it{p}_{T,jet} vs. #it{p}_{T,corr}; #it{p}_{T,jet} (GeV/#it{c});  #it{p}_{T,corr} (GeV/#it{c})", {HistType::kTH2F, {jetPtAxis, jetPtAxisRhoAreaSub}});
       registry.add("h2_jet_pt_track_pt_rhoareasubtracted", "jet #it{p}_{T,jet} vs. #it{p}_{T,track}; #it{p}_{T,jet} (GeV/#it{c});  #it{p}_{T,track} (GeV/#it{c})", {HistType::kTH2F, {jetPtAxisRhoAreaSub, trackPtAxis}});
       registry.add("h3_jet_pt_eta_phi_rhoareasubtracted", "jet_pt_eta_phi_rhoareasubtracted", {HistType::kTH3F, {jetPtAxisRhoAreaSub, jetEtaAxis, PhiAxis}});
-      if(doprocessSpectraMCDWeighted){
+      if (doprocessSpectraMCDWeighted) {
         registry.add("h_jet_phat", "jet #hat{p};#hat{p} (GeV/#it{c});entries", {HistType::kTH1F, {{1000, 0, 1000}}});
         registry.add("h_jet_phat_weighted", "jet #hat{p};#hat{p} (GeV/#it{c});entries", {HistType::kTH1F, {{1000, 0, 1000}}});
       }
@@ -123,7 +123,6 @@ struct JetSpectraChargedTask {
       registry.add("h_jet_pt_eventwiseconstituentsubtracted", "jet pT;#it{p}_{T,jet} (GeV/#it{c});entries", {HistType::kTH1F, {jetPtAxis}});
       registry.add("jet_observables_eventwiseconstituentsubtracted", "jet_observables_eventwiseconstituentsubtracted", HistType::kTHnSparseF, {jetPtAxis, jetEtaAxis, PhiAxis});
     }
-
   }
 
   Filter trackCuts = (aod::jtrack::pt >= trackPtMin && aod::jtrack::pt < trackPtMax && aod::jtrack::eta > trackEtaMin && aod::jtrack::eta < trackEtaMax);
@@ -170,7 +169,7 @@ struct JetSpectraChargedTask {
   {
     if (jet.r() == round(selectedJetsRadius * 100.0f)) {
       Double_t jetcorrpt = jet.pt() - (rho * jet.area());
-      //fill jet histograms after area-based subtraction
+      // fill jet histograms after area-based subtraction
       registry.fill(HIST("h_jet_pt_rhoareasubtracted"), jetcorrpt, weight);
       registry.fill(HIST("h2_centrality_jet_pt_rhoareasubtracted"), centrality, jetcorrpt, weight);
       registry.fill(HIST("h2_centrality_jet_eta_rhoareasubtracted"), centrality, jet.eta(), weight);
@@ -200,9 +199,9 @@ struct JetSpectraChargedTask {
   template <typename TTracks>
   void fillTrackHistograms(TTracks const& track, float weight = 1.0)
   {
-      registry.fill(HIST("h_track_pt"), track.pt(), weight);
-      registry.fill(HIST("h2_track_eta_track_phi"), track.eta(), track.phi(), weight);
-      registry.fill(HIST("h2_track_pt_track_dcaxy"), track.pt(), track.dcaXY(), weight);
+    registry.fill(HIST("h_track_pt"), track.pt(), weight);
+    registry.fill(HIST("h2_track_eta_track_phi"), track.eta(), track.phi(), weight);
+    registry.fill(HIST("h2_track_pt_track_dcaxy"), track.pt(), track.dcaXY(), weight);
   }
 
   void processQC(soa::Filtered<aod::JetCollisions>::iterator const& collision,
@@ -239,7 +238,6 @@ struct JetSpectraChargedTask {
       registry.fill(HIST("h_jet_eta"), jet.eta());
       registry.fill(HIST("h_jet_phi"), jet.phi());
     }
-
   }
   PROCESS_SWITCH(JetSpectraChargedTask, processQC, "collisions and track QC for Data and MCD", true);
 
@@ -281,7 +279,6 @@ struct JetSpectraChargedTask {
       registry.fill(HIST("h_jet_eta"), jet.eta(), eventWeight);
       registry.fill(HIST("h_jet_phi"), jet.phi(), eventWeight);
     }
-
   }
   PROCESS_SWITCH(JetSpectraChargedTask, processQCWeighted, "weighted collsions and tracks QC for MCD", false);
 
@@ -308,8 +305,8 @@ struct JetSpectraChargedTask {
   PROCESS_SWITCH(JetSpectraChargedTask, processSpectraData, "jet spectra for Data", false);
 
   void processSpectraMCD(soa::Filtered<soa::Join<aod::JetCollisions, aod::BkgChargedRhos>>::iterator const& collision,
-                           soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents> const& jets,
-                           aod::JetTracks const&)
+                         soa::Join<aod::ChargedMCDetectorLevelJets, aod::ChargedMCDetectorLevelJetConstituents> const& jets,
+                         aod::JetTracks const&)
   {
     if (!jetderiveddatautilities::selectCollision(collision, eventSelection)) {
       return;
@@ -359,8 +356,8 @@ struct JetSpectraChargedTask {
   PROCESS_SWITCH(JetSpectraChargedTask, processSpectraMCDWeighted, "jet finder QA mcd with weighted events", false);
 
   void processEvtWiseConstSubJetsData(soa::Filtered<aod::JetCollisions>::iterator const& collision,
-                                    soa::Join<aod::ChargedEventWiseSubtractedJets, aod::ChargedEventWiseSubtractedJetConstituents> const& jets,
-                                    aod::JetTracksSub const&)
+                                      soa::Join<aod::ChargedEventWiseSubtractedJets, aod::ChargedEventWiseSubtractedJetConstituents> const& jets,
+                                      aod::JetTracksSub const&)
   {
     if (!jetderiveddatautilities::selectCollision(collision, eventSelection)) {
       return;
@@ -401,9 +398,9 @@ struct JetSpectraChargedTask {
     }
   }
   PROCESS_SWITCH(JetSpectraChargedTask, processEvtWiseConstSubJetsMCD, "jet spectrum for eventwise constituent-subtracted mcd jets", false);
-
 };
 
-WorkflowSpec defineDataProcessing(ConfigContext const& cfgc) {
+WorkflowSpec defineDataProcessing(ConfigContext const& cfgc)
+{
   return WorkflowSpec{adaptAnalysisTask<JetSpectraChargedTask>(cfgc, TaskName{"jet-charged-spectra"})};
-  }
+}
