@@ -271,7 +271,7 @@ struct JetDerivedDataProducerTask {
   }
   PROCESS_SWITCH(JetDerivedDataProducerTask, processMcCollisionLabels, "produces derived MC collision labels table", false);
 
-  void processMcCollisions(soa::Join<aod::McCollisions, aod::HepMCXSections, aod::MultsExtraMC, aod::McCentFV0As, aod::McCentFT0As, aod::McCentFT0Cs, aod::McCentFT0Ms>::iterator const& mcCollision)
+  void processMcCollisions(soa::Join<aod::McCollisions, aod::HepMCXSections, aod::MultsExtraMC, aod::CentFV0As, aod::CentFT0As, aod::CentFT0Cs, aod::CentFT0Ms>::iterator const& mcCollision)
   {
     products.jMcCollisionsTable(mcCollision.posX(), mcCollision.posY(), mcCollision.posZ(), mcCollision.multMCFV0A(), mcCollision.multMCFT0A(), mcCollision.multMCFT0C(), mcCollision.centFV0A(), mcCollision.centFT0A(), mcCollision.centFT0C(), mcCollision.centFT0M(), mcCollision.weight(), mcCollision.getSubGeneratorId(), mcCollision.accepted(), mcCollision.attempted(), mcCollision.xsectGen(), mcCollision.xsectErr(), mcCollision.ptHard());
     products.jMcCollisionsParentIndexTable(mcCollision.globalIndex());
@@ -285,7 +285,7 @@ struct JetDerivedDataProducerTask {
   }
   PROCESS_SWITCH(JetDerivedDataProducerTask, processMcCollisionsWithoutCentralityAndMultiplicity, "produces derived MC collision table without centraility and multiplicity", false);
 
-  void processMcCollisionsWithoutXsection(soa::Join<aod::McCollisions, aod::MultsExtraMC, aod::McCentFV0As, aod::McCentFT0As, aod::McCentFT0Cs, aod::McCentFT0Ms>::iterator const& mcCollision)
+  void processMcCollisionsWithoutXsection(soa::Join<aod::McCollisions, aod::MultsExtraMC, aod::CentFV0As, aod::CentFT0As, aod::CentFT0Cs, aod::CentFT0Ms>::iterator const& mcCollision)
   {
     products.jMcCollisionsTable(mcCollision.posX(), mcCollision.posY(), mcCollision.posZ(), mcCollision.multMCFV0A(), mcCollision.multMCFT0A(), mcCollision.multMCFT0C(), mcCollision.centFV0A(), mcCollision.centFT0A(), mcCollision.centFT0C(), mcCollision.centFT0M(), mcCollision.weight(), mcCollision.getSubGeneratorId(), 1, 1, 1.0, 1.0, 999.0);
     products.jMcCollisionsParentIndexTable(mcCollision.globalIndex());
